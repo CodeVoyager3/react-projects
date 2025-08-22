@@ -1,0 +1,44 @@
+name: Build React Projects
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: 
+          - 01basicreact
+          - 01vitereact
+          - 02counter
+          - 03tailwindprops
+          - 04bgChanger
+          - 05passwordGenerator
+          - 06currencyConverter
+          - 07reactRouter
+          - custom_react
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: |
+          cd ${{ matrix.project }}
+          npm install
+
+      - name: Build project
+        run: |
+          cd ${{ matrix.project }}
+          npm run build
+
